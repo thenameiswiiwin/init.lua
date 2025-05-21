@@ -45,6 +45,12 @@ return {
                 "lua_ls",
                 "rust_analyzer",
                 "gopls",
+                "tailwindcss",
+                "ts_ls",
+                "cssls",
+                "vue_ls",
+                "intelephense",
+                "phpactor",
             },
             handlers = {
                 function(server_name) -- default handler (optional)
@@ -69,6 +75,107 @@ return {
                     vim.g.zig_fmt_autosave = 0
 
                 end,
+
+                cssls = {},
+
+                html = {},
+
+                tailwindcss = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.tailwindcss.setup({
+                        root_dir = lspconfig.util.root_pattern(".git")
+                    })
+                end,
+
+                ["ts_ls"] = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.ts_ls.setup({
+                        root_dir = lspconfig.util.root_pattern(".git"),
+                        single_file_support = false,
+                        settings = {
+                            typescript = {
+                                inlayHints = {
+                                    includeInlayParameterNameHints = "literal",
+                                    includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                                    includeInlayFunctionParameterTypeHints = true,
+                                    includeInlayVariableTypeHints = false,
+                                    includeInlayPropertyDeclarationTypeHints = true,
+                                    includeInlayFunctionLikeReturnTypeHints = true,
+                                    includeInlayEnumMemberValueHints = true,
+                                },
+                            },
+                            javascript = {
+                                inlayHints = {
+                                    includeInlayParameterNameHints = "all",
+                                    includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                                    includeInlayFunctionParameterTypeHints = true,
+                                    includeInlayVariableTypeHints = true,
+                                    includeInlayPropertyDeclarationTypeHints = true,
+                                    includeInlayFunctionLikeReturnTypeHints = true,
+                                    includeInlayEnumMemberValueHints = true,
+                                },
+                            },
+                        },
+                    })
+                end,
+
+                ["vue_ls"] = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.vue_ls.setup{
+                        capabilities = capabilities,
+                        volar = {
+                            init_options = {
+                                vue = {
+                                    hybridMode = true,
+                                }
+                            }
+                        },
+                        vtsls = {},
+                    }
+                end,
+
+                gopls = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.gopls.setup {
+                        capabilities = capabilities,
+                        settings = {
+                            gopls = {
+                                gofumpt = true,
+                                codelenses = {
+                                  gc_details = false,
+                                  generate = true,
+                                  regenerate_cgo = true,
+                                  run_govulncheck = true,
+                                  test = true,
+                                  tidy = true,
+                                  upgrade_dependency = true,
+                                  vendor = true,
+                                },
+                                hints = {
+                                  assignVariableTypes = true,
+                                  compositeLiteralFields = true,
+                                  compositeLiteralTypes = true,
+                                  constantValues = true,
+                                  functionTypeParameters = true,
+                                  parameterNames = true,
+                                  rangeVariableTypes = true,
+                                },
+                                analyses = {
+                                  nilness = true,
+                                  unusedparams = true,
+                                  unusedwrite = true,
+                                  useany = true,
+                                },
+                                usePlaceholders = true,
+                                completeUnimported = true,
+                                staticcheck = true,
+                                directoryFilters = { "-.git", "-.vscode", "-.idea", "-.vscode-test", "-node_modules" },
+                                semanticTokens = true,
+                            },
+                        }
+                    }
+                end,
+
                 ["lua_ls"] = function()
                     local lspconfig = require("lspconfig")
                     lspconfig.lua_ls.setup {

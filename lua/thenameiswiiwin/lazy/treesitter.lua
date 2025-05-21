@@ -1,4 +1,5 @@
 return {
+    { "roobert/tailwindcss-colorizer-cmp.nvim", opts = {} },
     {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
@@ -7,7 +8,7 @@ return {
             -- A list of parser names, or "all"
             ensure_installed = {
                 "vimdoc", "javascript", "typescript", "c", "lua", "rust",
-                "jsdoc", "bash", "go",
+                "jsdoc", "bash", "go", "gomod", "gowork", "gosum", "php",
             },
 
             -- Install parsers synchronously (only applied to `ensure_installed`)
