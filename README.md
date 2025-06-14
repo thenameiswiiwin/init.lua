@@ -1,7 +1,3 @@
----
-sidebar_position: 3
----
-
 # ⌨️ Keymaps
 
 **LazyVim** uses [which-key.nvim](https://github.com/folke/which-key.nvim) to help you remember your
